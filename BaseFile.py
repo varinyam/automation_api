@@ -1,6 +1,7 @@
 import xlrd
 from xlrd import open_workbook
 
+
 class ExcelOperations(object):
     def __init__(self, *selected_test_case_values):
         self._selected_test_case_values=selected_test_case_values
@@ -14,26 +15,25 @@ for sheet in workBook.sheets():
         continue
     numberOfRows=sheet.nrows
     numberOfColumns=sheet.ncols
-
-    items=[]
-    rows=[]
     # data processing logic
-    for row in range(1,numberOfRows):
-        values=[]
-        for col in range(1,numberOfColumns):
-            #import pdb;pdb.set_trace()
+    values = []
+    for row in range(1, numberOfRows):
+        value_list = []
+        for col in range(1, numberOfColumns):
+            # import pdb;pdb.set_trace()
             value=(sheet.cell(row,col).value)
             try:
-                value=str(int(value))
-
+                value=float(value)
+                value_list.append(value)
             except ValueError:
-                pass
-            finally:
-                values.append(value)
+                value_list.append(value)
+            # finally:
+            #     values.append(value)
 
-        item=ExcelOperations(*values)
-        items.append(item)
+        # item=ExcelOperations(*values)
+        values.append(value_list)
 
 #printing the items from list
-for item in items:
+for item in values:
+    # import pdb;pdb.set_trace()
     print(item)
